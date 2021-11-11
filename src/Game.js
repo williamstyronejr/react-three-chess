@@ -2,7 +2,7 @@ import * as React from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 const posArray = new Float32Array(1000 * 3);
 
-const ParticleBG = (props) => {
+const ParticleBG = ({ ...props }) => {
   const ref = React.useRef();
   React.useLayoutEffect(() => {
     for (let i = 0; i < 1000 * 3; i++) {
@@ -10,7 +10,9 @@ const ParticleBG = (props) => {
     }
   }, []);
 
-  useFrame((state, delta) => (ref.current.rotation.y -= 0.1 * delta));
+  useFrame((state, delta) => {
+    ref.current.ref.current.rotation.y -= 0.1 * delta;
+  });
 
   return (
     <points {...props} ref={ref} scale={2}>
@@ -22,7 +24,7 @@ const ParticleBG = (props) => {
           count={1000}
         />
       </bufferGeometry>
-      <pointsMaterial size={0.1} color="orange" />
+      <pointsMaterial size={0.1} color="#C9ADA7" />
     </points>
   );
 };
@@ -30,9 +32,8 @@ const ParticleBG = (props) => {
 const Game = ({ gameStarted }) => {
   return (
     <Canvas>
-      <color attach="background" args={["#2b2b2b"]} />
+      <color attach="background" args={["#22223B"]} />
       <ambientLight />
-      <ParticleBG />
     </Canvas>
   );
 };
